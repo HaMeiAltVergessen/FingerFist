@@ -1,0 +1,120 @@
+[gd_scene load_steps=9 format=3 uid="uid://dlunabrdogtq7"]
+
+[ext_resource type="Texture2D" uid="uid://b8jmy0dqj02ro" path="res://assets/Finger 01.png" id="1_ibkli"]
+[ext_resource type="Script" uid="uid://b7i7tnbt8spwh" path="res://scripts/Game.gd" id="1_qbsmt"]
+[ext_resource type="Texture2D" uid="uid://c8qs5h4rhsgjh" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0010_1.png" id="2_aug50"]
+[ext_resource type="Texture2D" uid="uid://1udeim5ihnbv" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0002_7.png" id="3_kiw3p"]
+[ext_resource type="Texture2D" uid="uid://c6v3oebdvy1km" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0004_Lights.png" id="4_400sg"]
+[ext_resource type="Texture2D" uid="uid://ddh7bnulnr26m" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0007_Lights.png" id="5_g4kob"]
+[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Fingerfist Ost 05.mp3" id="7_kiw3p"]
+[ext_resource type="Texture2D" uid="uid://o84s4exwsvfa" path="res://assets/BoxSackBase.png" id="8_400sg"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_qbsmt")
+
+[node name="Background" type="CanvasLayer" parent="."]
+
+[node name="Layer0004Lights" type="Sprite2D" parent="Background"]
+position = Vector2(569, 292)
+scale = Vector2(1.22953, 0.724464)
+texture = ExtResource("2_aug50")
+
+[node name="Layer00027" type="Sprite2D" parent="Background"]
+position = Vector2(578.5, 772)
+scale = Vector2(1.2403, 1)
+texture = ExtResource("3_kiw3p")
+
+[node name="Layer0004Lights2" type="Sprite2D" parent="Background"]
+position = Vector2(605, -57)
+texture = ExtResource("4_400sg")
+
+[node name="Layer0007Lights" type="Sprite2D" parent="Background"]
+position = Vector2(792, 120)
+texture = ExtResource("5_g4kob")
+
+[node name="BoxFingerSprite" type="Sprite2D" parent="Background"]
+position = Vector2(717, 439)
+scale = Vector2(5.26563, 5.54688)
+texture = ExtResource("1_ibkli")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_kiw3p")
+autoplay = true
+
+[node name="GameTimer" type="Timer" parent="."]
+
+[node name="PauseScreen" type="CanvasLayer" parent="."]
+
+[node name="PauseScoreLabel" type="Label" parent="PauseScreen"]
+offset_left = 195.0
+offset_top = 13.0
+offset_right = 708.0
+offset_bottom = 198.0
+theme_override_font_sizes/font_size = 66
+text = "Score: 0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="PauseScreen"]
+offset_left = 286.0
+offset_top = 437.0
+offset_right = 589.0
+offset_bottom = 521.0
+text = "Next Round
+"
+
+[node name="NextRoundTimeLabel" type="Label" parent="PauseScreen"]
+offset_left = 274.0
+offset_top = 208.0
+offset_right = 604.0
+offset_bottom = 357.0
+theme_override_font_sizes/font_size = 28
+text = "Time next Round:
+"
+horizontal_alignment = 1
+
+[node name="GameScreen" type="CanvasLayer" parent="."]
+
+[node name="TimerLabel" type="Label" parent="GameScreen"]
+visibility_layer = 2
+z_index = 1
+offset_left = 12.0
+offset_top = 63.0
+offset_right = 526.0
+offset_bottom = 300.0
+theme_override_font_sizes/font_size = 55
+text = "Time:"
+
+[node name="BoxSack" type="Sprite2D" parent="GameScreen"]
+position = Vector2(172, 319)
+scale = Vector2(4.78125, 4.48438)
+texture = ExtResource("8_400sg")
+
+[node name="EndScreen" type="CanvasLayer" parent="."]
+
+[node name="FinalScore" type="Label" parent="EndScreen"]
+z_index = 1
+offset_left = 183.0
+offset_top = 137.0
+offset_right = 577.0
+offset_bottom = 304.0
+theme_override_font_sizes/font_size = 77
+
+[node name="RetryButton" type="Button" parent="EndScreen"]
+z_index = 1
+offset_left = 387.0
+offset_top = 308.0
+offset_right = 761.0
+offset_bottom = 471.0
+text = "Retry"
+
+[node name="ColorRect" type="ColorRect" parent="EndScreen"]
+offset_right = 1162.0
+offset_bottom = 647.0
+color = Color(1, 0.760784, 0.721569, 0.768627)
+
+[node name="GameCamera" type="Camera2D" parent="."]
+
+[connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
+[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
