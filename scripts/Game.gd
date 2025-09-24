@@ -106,8 +106,9 @@ func _show_end_screen() -> void:
 	timer_label.visible = false
 #	score_label.visible = false
 
-func _on_retry_pressed() -> void:
+func _on_retry_button_pressed():
 	get_tree().reload_current_scene()	
+
 	
 func camera_shake() -> void:
 	var rand_x = randf_range(-5.0, 5.0)

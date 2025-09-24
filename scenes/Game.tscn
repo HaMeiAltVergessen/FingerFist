@@ -101,6 +101,11 @@ offset_right = 577.0
 offset_bottom = 304.0
 theme_override_font_sizes/font_size = 77
 
+[node name="ColorRect" type="ColorRect" parent="EndScreen"]
+offset_right = 1162.0
+offset_bottom = 647.0
+color = Color(1, 0.760784, 0.721569, 0.768627)
+
 [node name="RetryButton" type="Button" parent="EndScreen"]
 z_index = 1
 offset_left = 387.0
@@ -109,12 +114,7 @@ offset_right = 761.0
 offset_bottom = 471.0
 text = "Retry"
 
-[node name="ColorRect" type="ColorRect" parent="EndScreen"]
-offset_right = 1162.0
-offset_bottom = 647.0
-color = Color(1, 0.760784, 0.721569, 0.768627)
-
 [node name="GameCamera" type="Camera2D" parent="."]
 
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
-[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_button_pressed"]
