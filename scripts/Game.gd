@@ -11,8 +11,10 @@ extends Node2D
 @onready var end_screen: CanvasLayer = $EndScreen
 @onready var game_timer: Timer = $GameTimer
 @onready var box_sack: Sprite2D = $GameScreen/BoxSack
-@onready var game_camera: Camera2D = $GameScreen/GameCamera
+@onready var game_camera: Camera2D = $GameCamera
 @onready var highscore_label: Label = $EndScreen/HighscoreLabel
+@onready var box_sound1: AudioStreamPlayer = $BoxSound1
+@onready var box_sound2: AudioStreamPlayer = $BoxSound2
 
 
 var highscores: Array[int] = []
@@ -127,6 +129,12 @@ func _input(event: InputEvent) -> void:
 			increase_score()
 		elif event is InputEventScreenTouch and event.pressed:
 			increase_score()
+	# Sounds abspielen, abwechselnd
+	if randi() % 2 == 0:
+		box_sound1.play()
+	else:
+		box_sound2.play()
+		
 
 func increase_score() -> void:
 	var points := 1

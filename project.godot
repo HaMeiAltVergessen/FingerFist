@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [file_customization]
 
 folder_colors={
+"res://Audio/": "purple",
 "res://assets/": "red",
 "res://data/": "blue",
 "res://scenes/": "orange",
