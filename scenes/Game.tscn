@@ -91,6 +91,8 @@ position = Vector2(172, 319)
 scale = Vector2(4.78125, 4.48438)
 texture = ExtResource("8_400sg")
 
+[node name="GameCamera" type="Camera2D" parent="GameScreen"]
+
 [node name="EndScreen" type="CanvasLayer" parent="."]
 
 [node name="FinalScore" type="Label" parent="EndScreen"]
@@ -104,17 +106,21 @@ theme_override_font_sizes/font_size = 77
 [node name="ColorRect" type="ColorRect" parent="EndScreen"]
 offset_right = 1162.0
 offset_bottom = 647.0
-color = Color(1, 0.760784, 0.721569, 0.768627)
+color = Color(0.0947514, 0, 0, 0.768627)
 
 [node name="RetryButton" type="Button" parent="EndScreen"]
 z_index = 1
-offset_left = 387.0
-offset_top = 308.0
-offset_right = 761.0
-offset_bottom = 471.0
+offset_left = 772.0
+offset_top = 39.0
+offset_right = 904.0
+offset_bottom = 563.0
+theme_override_font_sizes/font_size = 44
 text = "Retry"
 
-[node name="GameCamera" type="Camera2D" parent="."]
+[node name="HighscoreLabel" type="Label" parent="EndScreen"]
+offset_left = 899.0
+offset_right = 1123.0
+offset_bottom = 649.0
 
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
 [connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_button_pressed"]
