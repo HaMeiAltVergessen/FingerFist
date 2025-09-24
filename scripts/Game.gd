@@ -4,15 +4,17 @@ extends Node2D
 @onready var continue_button: Button = $PauseScreen/ContinueButton
 @onready var pause_score_label: Label = $PauseScreen/PauseScoreLabel
 @onready var next_round_time_label: Label = $PauseScreen/NextRoundTimeLabel
+
 @onready var retry_button: Button = $EndScreen/RetryButton
-@onready var timer_label: Label = $GameScreen/TimerLabel
-@onready var score_label: Label = $ScoreLabel
 @onready var final_score_label: Label = $EndScreen/FinalScore
 @onready var end_screen: CanvasLayer = $EndScreen
+@onready var highscore_label: Label = $EndScreen/HighscoreLabel
+
+@onready var timer_label: Label = $GameScreen/TimerLabel
 @onready var game_timer: Timer = $GameTimer
 @onready var box_sack: Sprite2D = $GameScreen/BoxSack
 @onready var game_camera: Camera2D = $GameCamera
-@onready var highscore_label: Label = $EndScreen/HighscoreLabel
+
 @onready var box_sound1: AudioStreamPlayer = $BoxSound1
 @onready var box_sound2: AudioStreamPlayer = $BoxSound2
 @onready var punch_sounds: Array[AudioStreamPlayer] = [
@@ -54,20 +56,53 @@ func _ready() -> void:
 	continue_button.pressed.connect(_on_continue_pressed)
 	_show_pause_screen()
 	sack_stages = [
-	load("res://assets/BXS1.png"),
-	load("res://assets/BXS2.png"),
-	load("res://assets/BXS3.png"),
-	load("res://assets/BoxSackBase.png")
-]
+		load("res://assets/BoxSackBase.png"),  # normales Sprite
+		load("res://assets/BXS1.png"),         # 50 Punkte
+		load("res://assets/BXS2.png"),         # 100 Punkte
+		load("res://assets/BXS3.png")          # optional weiteres Sprite
+	]
+	box_sack.texture = sack_stages[0]
 	box_sack.texture = sack_stages[0]
 	game_camera.make_current()
+	load_highscores()
+	_update_highscore_list()
 
+func _input(event: InputEvent) -> void:
+	if not game_active:
+		return
+	if not game_timer.is_stopped():
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			increase_score()
+		elif event is InputEventScreenTouch and event.pressed:
+			increase_score()
+	# Sounds abspielen, abwechselnd
+	
+
+func _start_round() -> void:
+	game_active = true
+	pause_screen.visible = false
+	timer_label.visible = true
+#	score_label.visible = false # Score während der Runde ausblenden
+	game_timer.wait_time = next_round_time
+	game_timer.start()
+	timer_label.text = "Time: %.1f" % game_timer.time_left
+
+func update_box_sack() -> void:
+	if score >= 150:
+		# Boxsack zerstören
+		if is_instance_valid(box_sack):
+			box_sack.queue_free()
+	elif score >= 100:
+		box_sack.texture = sack_stages[2]  # 100 Punkte-Sprite
+	elif score >= 50:
+		box_sack.texture = sack_stages[1]  # 50 Punkte-Sprite
+	else:
+		box_sack.texture = sack_stages[0]  # Basis-Sprite
 
 func _show_pause_screen() -> void:
 	game_active = false
 	pause_screen.visible = true
 	timer_label.visible = false
-#	score_label.visible = false
 	end_screen.visible = false
 
 	pause_score_label.text = "Score: %d" % score
@@ -79,18 +114,6 @@ func _show_pause_screen() -> void:
 	else:
 		pause_screen.visible = false
 		_show_end_screen()
-	if score > 100:
-		# Effekt / Animation optional
-		box_sack.queue_free()  # entfernt den Sack komplett
-		
-func _start_round() -> void:
-	game_active = true
-	pause_screen.visible = false
-	timer_label.visible = true
-#	score_label.visible = false # Score während der Runde ausblenden
-	game_timer.wait_time = next_round_time
-	game_timer.start()
-	timer_label.text = "Time: %.1f" % game_timer.time_left
 
 func _on_continue_pressed() -> void:
 	continue_button.disabled = true
@@ -108,8 +131,6 @@ func _on_game_timer_timeout() -> void:
 
 	game_active = false
 	round_count += 1
-	if round_count <= sack_stages.size():
-		box_sack.texture = sack_stages[round_count - 1]
 
 	if round_count < rounds_total:
 		# Nächste Runde vorbereiten
@@ -119,11 +140,12 @@ func _on_game_timer_timeout() -> void:
 		end_screen.visible = true
 		final_score_label.text = "Final Score: %d" % score
 		timer_label.visible = false
-
 		# Jetzt erst Highscore hinzufügen
 		highscores.append(score)
 		highscores.sort()
 		highscores.reverse()
+		_update_highscore_list()
+		save_highscores()  
 
 		# Anzeige (z. B. Top 5)
 		var top_scores = highscores.slice(0, 5)
@@ -131,17 +153,12 @@ func _on_game_timer_timeout() -> void:
 		for i in range(top_scores.size()):
 			list_text += "%d. %d\n" % [i + 1, top_scores[i]]
 		highscore_label.text = list_text
+	if score > 150:
+		# Effekt / Animation optional
+		box_sack.queue_free()  # entfernt den Sack komplett
+		box_sack.is_queued_for_deletion()
 
-func _input(event: InputEvent) -> void:
-	if not game_active:
-		return
-	if not game_timer.is_stopped():
-		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			increase_score()
-		elif event is InputEventScreenTouch and event.pressed:
-			increase_score()
-	# Sounds abspielen, abwechselnd
-	
+
 
 func increase_score() -> void:
 	var points := 1
@@ -151,6 +168,8 @@ func increase_score() -> void:
 	#update_score_label()
 	camera_shake()
 	play_punch_sound()
+	update_box_sack()   # <--- HIER wird nach Schwellen geprüft
+
 
 func _show_end_screen() -> void:
 	end_screen.visible = true
@@ -158,11 +177,25 @@ func _show_end_screen() -> void:
 	timer_label.visible = false
 #	score_label.visible = false
 
-
-func _on_retry_button_pressed():
-	get_tree().reload_current_scene()	
-
+func _update_highscore_list() -> void:
+	var text = "Highscores:\n"
+	for i in range(min(10, highscores.size())): # nur Top 10 anzeigen
+		text += "%d. %d\n" % [i + 1, highscores[i]]
+	highscore_label.text = text
 	
+const SAVE_FILE = "user://highscores.save"
+
+func save_highscores() -> void:
+	var file = FileAccess.open(SAVE_FILE, FileAccess.WRITE)
+	if file:
+		file.store_var(highscores)
+
+func load_highscores() -> void:
+	if FileAccess.file_exists(SAVE_FILE):
+		var file = FileAccess.open(SAVE_FILE, FileAccess.READ)
+		if file:
+			highscores = file.get_var()
+
 func camera_shake() -> void:
 	for i in 3: # 3 schnelle Wackler
 		var rand_x = randf_range(-10.0, 10.0)
@@ -176,3 +209,7 @@ func play_punch_sound() -> void:
 		return
 	var rand_index = randi_range(0, punch_sounds.size() - 1)
 	punch_sounds[rand_index].play()
+
+
+func _on_retry_pressed() -> void:
+	get_tree().reload_current_scene()

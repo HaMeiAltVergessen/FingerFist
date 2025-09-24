@@ -161,8 +161,8 @@ text = "Time:"
 metadata/_edit_use_anchors_ = true
 
 [node name="BoxSack" type="Sprite2D" parent="GameScreen"]
-position = Vector2(172, 319)
-scale = Vector2(4.78125, 4.48438)
+position = Vector2(180, 408)
+scale = Vector2(6.45313, 9.64063)
 texture = ExtResource("8_400sg")
 
 [node name="EndScreen" type="CanvasLayer" parent="."]
@@ -177,17 +177,19 @@ theme_override_font_sizes/font_size = 77
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="EndScreen"]
-offset_right = 1162.0
-offset_bottom = 647.0
+offset_left = -2.0
+offset_top = 3.0
+offset_right = 1160.0
+offset_bottom = 650.0
 color = Color(0.0947514, 0, 0, 0.768627)
 metadata/_edit_use_anchors_ = true
 
 [node name="RetryButton" type="Button" parent="EndScreen"]
 z_index = 1
-offset_left = 773.0
-offset_top = 249.0
-offset_right = 905.0
-offset_bottom = 403.0
+offset_left = 122.0
+offset_top = 286.0
+offset_right = 254.0
+offset_bottom = 440.0
 theme_override_font_sizes/font_size = 44
 text = "Retry"
 metadata/_edit_use_anchors_ = true
@@ -196,7 +198,8 @@ metadata/_edit_use_anchors_ = true
 offset_left = 899.0
 offset_right = 1123.0
 offset_bottom = 649.0
+theme_override_font_sizes/font_size = 22
 metadata/_edit_use_anchors_ = true
 
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
-[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
