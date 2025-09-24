@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dlunabrdogtq7"]
+[gd_scene load_steps=10 format=3 uid="uid://dlunabrdogtq7"]
 
 [ext_resource type="Texture2D" uid="uid://b8jmy0dqj02ro" path="res://assets/Finger 01.png" id="1_ibkli"]
 [ext_resource type="Script" uid="uid://b7i7tnbt8spwh" path="res://scripts/Game.gd" id="1_qbsmt"]
 [ext_resource type="Texture2D" uid="uid://c8qs5h4rhsgjh" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0010_1.png" id="2_aug50"]
+[ext_resource type="PackedScene" uid="uid://bcpplx41n15uu" path="res://scenes/click_feedback.tscn" id="2_g4kob"]
 [ext_resource type="Texture2D" uid="uid://1udeim5ihnbv" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0002_7.png" id="3_kiw3p"]
 [ext_resource type="Texture2D" uid="uid://c6v3oebdvy1km" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0004_Lights.png" id="4_400sg"]
 [ext_resource type="Texture2D" uid="uid://ddh7bnulnr26m" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0007_Lights.png" id="5_g4kob"]
@@ -18,6 +19,11 @@ script = ExtResource("1_qbsmt")
 position = Vector2(585, 325)
 
 [node name="Background" type="CanvasLayer" parent="."]
+
+[node name="ClickFeedback" parent="Background" instance=ExtResource("2_g4kob")]
+z_index = 100
+z_as_relative = false
+position = Vector2(17.5481, 12.7433)
 
 [node name="Layer0004Lights" type="Sprite2D" parent="Background"]
 position = Vector2(569, 292)
@@ -44,7 +50,7 @@ texture = ExtResource("1_ibkli")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_kiw3p")
-volume_db = -20.0
+volume_db = -25.297
 autoplay = true
 
 [node name="BoxSound1" type="AudioStreamPlayer" parent="."]
