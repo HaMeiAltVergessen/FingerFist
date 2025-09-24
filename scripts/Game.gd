@@ -15,7 +15,18 @@ extends Node2D
 @onready var highscore_label: Label = $EndScreen/HighscoreLabel
 @onready var box_sound1: AudioStreamPlayer = $BoxSound1
 @onready var box_sound2: AudioStreamPlayer = $BoxSound2
-
+@onready var punch_sounds: Array[AudioStreamPlayer] = [
+	$BoxPunch01,
+	$BoxPunch02,
+	$BoxPunch03,
+	$BoxPunch04,
+	$BoxPunch05,
+	$BoxPunch06,
+	$BoxPunch07,
+	$BoxPunch08,
+	$BoxPunch09,
+	$BoxPunch10
+]
 
 var highscores: Array[int] = []
 var score: int = 0
@@ -130,11 +141,7 @@ func _input(event: InputEvent) -> void:
 		elif event is InputEventScreenTouch and event.pressed:
 			increase_score()
 	# Sounds abspielen, abwechselnd
-	if randi() % 2 == 0:
-		box_sound1.play()
-	else:
-		box_sound2.play()
-		
+	
 
 func increase_score() -> void:
 	var points := 1
@@ -143,6 +150,7 @@ func increase_score() -> void:
 	score += points
 	#update_score_label()
 	camera_shake()
+	play_punch_sound()
 
 func _show_end_screen() -> void:
 	end_screen.visible = true
@@ -162,3 +170,9 @@ func camera_shake() -> void:
 		game_camera.offset = Vector2(rand_x, rand_y)
 		await get_tree().create_timer(0.4).timeout
 	game_camera.offset = Vector2.ZERO
+	
+func play_punch_sound() -> void:
+	if punch_sounds.is_empty():
+		return
+	var rand_index = randi_range(0, punch_sounds.size() - 1)
+	punch_sounds[rand_index].play()

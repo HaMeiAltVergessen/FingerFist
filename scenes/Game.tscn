@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dlunabrdogtq7"]
+[gd_scene load_steps=22 format=3 uid="uid://dlunabrdogtq7"]
 
 [ext_resource type="Texture2D" uid="uid://b8jmy0dqj02ro" path="res://assets/Finger 01.png" id="1_ibkli"]
 [ext_resource type="Script" uid="uid://b7i7tnbt8spwh" path="res://scripts/Game.gd" id="1_qbsmt"]
@@ -11,6 +11,16 @@
 [ext_resource type="Texture2D" uid="uid://o84s4exwsvfa" path="res://assets/BoxSackBase.png" id="8_400sg"]
 [ext_resource type="AudioStream" uid="uid://b17h3d586mk5r" path="res://Audio/BoxSound1.wav" id="8_qy1jj"]
 [ext_resource type="AudioStream" uid="uid://duk17ewh4xgh6" path="res://Audio/BoxSound2.wav" id="9_3xj3m"]
+[ext_resource type="AudioStream" uid="uid://wv1c8tk7ch17" path="res://Audio/BoxPunch01.wav" id="11_a8wo8"]
+[ext_resource type="AudioStream" uid="uid://dt6ftmxs8phlw" path="res://Audio/BoxPunch02.mp3" id="12_attvq"]
+[ext_resource type="AudioStream" uid="uid://dsp21su6j3epe" path="res://Audio/BoxPunch03.mp3" id="13_bneo8"]
+[ext_resource type="AudioStream" uid="uid://c0fsbjhoy6tu6" path="res://Audio/BoxPunch04.mp3" id="14_ocgqw"]
+[ext_resource type="AudioStream" uid="uid://cirflbajr54fx" path="res://Audio/BoxPunch05.mp3" id="15_jbgew"]
+[ext_resource type="AudioStream" uid="uid://doicjx40w8rk7" path="res://Audio/BoxPunch06.mp3" id="16_a85ww"]
+[ext_resource type="AudioStream" uid="uid://drso6dywxqkdi" path="res://Audio/BoxPunch07.mp3" id="17_jhsr3"]
+[ext_resource type="AudioStream" uid="uid://brgaar6u0c06e" path="res://Audio/BoxPunch08.mp3" id="18_0bq3a"]
+[ext_resource type="AudioStream" uid="uid://xbppsmmniub0" path="res://Audio/BoxPunch09.mp3" id="19_754j2"]
+[ext_resource type="AudioStream" uid="uid://cwhwhslpss8ag" path="res://Audio/BoxPunch10.mp3" id="20_i4jil"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_qbsmt")
@@ -59,6 +69,46 @@ volume_db = -20.0
 
 [node name="BoxSound2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_3xj3m")
+volume_db = -20.0
+
+[node name="BoxPunch01" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_a8wo8")
+volume_db = -20.0
+
+[node name="BoxPunch02" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_attvq")
+volume_db = -20.0
+
+[node name="BoxPunch03" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_bneo8")
+volume_db = -20.0
+
+[node name="BoxPunch04" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_ocgqw")
+volume_db = -20.0
+
+[node name="BoxPunch05" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_jbgew")
+volume_db = -20.0
+
+[node name="BoxPunch06" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_a85ww")
+volume_db = -20.0
+
+[node name="BoxPunch07" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_jhsr3")
+volume_db = -20.0
+
+[node name="BoxPunch08" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_0bq3a")
+volume_db = -20.0
+
+[node name="BoxPunch09" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_754j2")
+volume_db = -20.0
+
+[node name="BoxPunch10" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_i4jil")
 volume_db = -20.0
 
 [node name="GameTimer" type="Timer" parent="."]
