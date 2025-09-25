@@ -1,16 +1,17 @@
 extends Node2D
 
+@onready var end_screen: CanvasLayer = $EndScreen
 @onready var pause_screen: CanvasLayer = $PauseScreen
+
 @onready var continue_button: Button = $PauseScreen/ContinueButton
+@onready var retry_button: Button = $EndScreen/RetryButton
+
 @onready var pause_score_label: Label = $PauseScreen/PauseScoreLabel
 @onready var next_round_time_label: Label = $PauseScreen/NextRoundTimeLabel
-
-@onready var retry_button: Button = $EndScreen/RetryButton
 @onready var final_score_label: Label = $EndScreen/FinalScore
-@onready var end_screen: CanvasLayer = $EndScreen
 @onready var highscore_label: Label = $EndScreen/HighscoreLabel
-
 @onready var timer_label: Label = $GameScreen/TimerLabel
+
 @onready var game_timer: Timer = $GameTimer
 @onready var box_sack: Sprite2D = $GameScreen/BoxSack
 @onready var game_camera: Camera2D = $GameCamera
@@ -44,7 +45,18 @@ var round_count: int = 0
 
 
 func _ready() -> void:
-	randomize()
+	# Level je nach Progression laden
+	match Global.unlocked_levels:
+		1:
+			$Background/BackgroundSprite.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0002_7.png")
+			box_sack.texture = load("res://assets/BoxSackBase.png")
+		2:
+			#$Background.texture = load("res://assets/bg_level2.png")
+			box_sack.texture = load("res://assets/BoxSack2.png")
+		3:
+			#$Background.texture = load("res://assets/bg_level3.png")
+			box_sack.texture = load("res://assets/BoxSack3.png")
+			
 	round = 0
 	score = 0
 	round_durations.clear()
@@ -66,6 +78,7 @@ func _ready() -> void:
 	game_camera.make_current()
 	load_highscores()
 	_update_highscore_list()
+
 
 func _input(event: InputEvent) -> void:
 	if not game_active:

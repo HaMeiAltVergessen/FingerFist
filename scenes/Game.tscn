@@ -40,7 +40,7 @@ position = Vector2(569, 292)
 scale = Vector2(1.22953, 0.724464)
 texture = ExtResource("2_aug50")
 
-[node name="Layer00027" type="Sprite2D" parent="Background"]
+[node name="BackgroundSprite" type="Sprite2D" parent="Background"]
 position = Vector2(578.5, 772)
 scale = Vector2(1.2403, 1)
 texture = ExtResource("3_kiw3p")
