@@ -1,5 +1,6 @@
 extends Node2D
 
+# --- Nodes (prüfe Pfade) ---
 @onready var end_screen: CanvasLayer = $EndScreen
 @onready var pause_screen: CanvasLayer = $PauseScreen
 
@@ -31,32 +32,27 @@ extends Node2D
 	$BoxPunch10
 ]
 
-var highscores: Array[int] = []
+# --- Spielvariablen ---
 var score: int = 0
-@warning_ignore("shadowed_global_identifier")
 var round: int = 0
 var rounds_total: int = 3
 var round_durations: Array = []
 var next_round_time: int = 0
 var game_active: bool = false
 var sack_stages: Array[Texture2D] = []  # Texturen für Schaden
-var highscore: int = 0
 var round_count: int = 0
+# Hinweis: Highscores / total_score liegen jetzt in Global.*
 
-
+# -----------------------
+# READY
+# -----------------------
 func _ready() -> void:
-	# Level je nach Progression laden
-	match Global.unlocked_levels:
-		1:
-			$Background/BackgroundSprite.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0002_7.png")
-			box_sack.texture = load("res://assets/BoxSackBase.png")
-		2:
-			#$Background.texture = load("res://assets/bg_level2.png")
-			box_sack.texture = load("res://assets/BoxSack2.png")
-		3:
-			#$Background.texture = load("res://assets/bg_level3.png")
-			box_sack.texture = load("res://assets/BoxSack3.png")
-			
+	randomize()
+
+	# Progressive Background / BoxSack je nach Global.unlocked_levels
+	_apply_progression()
+
+	# Initialisierung
 	round = 0
 	score = 0
 	round_durations.clear()
@@ -65,68 +61,65 @@ func _ready() -> void:
 
 	end_screen.visible = false
 	pause_screen.visible = false
+
 	continue_button.pressed.connect(_on_continue_pressed)
-	_show_pause_screen()
+	if retry_button and not retry_button.pressed.is_connected(_on_retry_pressed):
+		retry_button.pressed.connect(_on_retry_pressed)
+
+	# Sack-Stages laden
 	sack_stages = [
-		load("res://assets/BoxSackBase.png"),  # normales Sprite
-		load("res://assets/BXS1.png"),         # 50 Punkte
-		load("res://assets/BXS2.png"),         # 100 Punkte
-		load("res://assets/BXS3.png")          # optional weiteres Sprite
+		load("res://assets/BoxSackBase.png"),  # 0 = Basis
+		load("res://assets/BXS1.png"),        # 1 = ab 50
+		load("res://assets/BXS2.png"),        # 2 = ab 100
+		load("res://assets/BXS3.png")         # 3 = zerstört / alternativ
 	]
-	box_sack.texture = sack_stages[0]
-	box_sack.texture = sack_stages[0]
+	if box_sack:
+		box_sack.texture = sack_stages[0]
+
 	game_camera.make_current()
-	load_highscores()
+
+	# Progression / Highscores aus Global laden und UI aktualisieren
+	Global.load_progress()
 	_update_highscore_list()
 
+	# Starte Pause-Screen vor der ersten Runde
+	_show_pause_screen()
 
+# -----------------------
+# INPUT & SCORE
+# -----------------------
 func _input(event: InputEvent) -> void:
 	if not game_active:
 		return
 	if not game_timer.is_stopped():
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			increase_score()
+			_on_valid_input()
 		elif event is InputEventScreenTouch and event.pressed:
-			increase_score()
-	# Sounds abspielen, abwechselnd
-	
+			_on_valid_input()
 
+func _on_valid_input() -> void:
+	var points := 1
+	if game_timer.time_left <= 2.0:
+		points = 2
+	score += points
+
+	# Effekte
+	camera_shake()
+	play_punch_sound()
+
+	# Boxsack nur verändern, wenn Schwellen erreicht sind
+	update_box_sack()
+
+# -----------------------
+# Runden / Timer
+# -----------------------
 func _start_round() -> void:
 	game_active = true
 	pause_screen.visible = false
 	timer_label.visible = true
-#	score_label.visible = false # Score während der Runde ausblenden
 	game_timer.wait_time = next_round_time
 	game_timer.start()
 	timer_label.text = "Time: %.1f" % game_timer.time_left
-
-func update_box_sack() -> void:
-	if score >= 150:
-		# Boxsack zerstören
-		if is_instance_valid(box_sack):
-			box_sack.queue_free()
-	elif score >= 100:
-		box_sack.texture = sack_stages[2]  # 100 Punkte-Sprite
-	elif score >= 50:
-		box_sack.texture = sack_stages[1]  # 50 Punkte-Sprite
-	else:
-		box_sack.texture = sack_stages[0]  # Basis-Sprite
-
-func _show_pause_screen() -> void:
-	game_active = false
-	pause_screen.visible = true
-	timer_label.visible = false
-	end_screen.visible = false
-
-	pause_score_label.text = "Score: %d" % score
-	if round < rounds_total:
-		next_round_time = round_durations[round]
-		next_round_time_label.text = "Nächste Runde: %.1f Sekunden" % next_round_time
-		continue_button.disabled = false
-		continue_button.visible = true
-	else:
-		pause_screen.visible = false
-		_show_end_screen()
 
 func _on_continue_pressed() -> void:
 	continue_button.disabled = true
@@ -141,88 +134,121 @@ func _process(_delta: float) -> void:
 func _on_game_timer_timeout() -> void:
 	if not game_active:
 		return
-
 	game_active = false
 	round_count += 1
 
+	# Falls noch Runden übrig -> Pause
 	if round_count < rounds_total:
-		# Nächste Runde vorbereiten
 		_show_pause_screen()
 	else:
-		# Finaler Endscreen nach letzter Runde
+		# Runde komplettiert -> Endscreen
 		end_screen.visible = true
 		final_score_label.text = "Final Score: %d" % score
 		timer_label.visible = false
-		# Jetzt erst Highscore hinzufügen
-		highscores.append(score)
-		highscores.sort()
-		highscores.reverse()
-		_update_highscore_list()
-		save_highscores()  
 
-		# Anzeige (z. B. Top 5)
-		var top_scores = highscores.slice(0, 5)
-		var list_text := "Highscores:\n"
-		for i in range(top_scores.size()):
-			list_text += "%d. %d\n" % [i + 1, top_scores[i]]
-		highscore_label.text = list_text
-	if score > 150:
-		# Effekt / Animation optional
-		box_sack.queue_free()  # entfernt den Sack komplett
-		box_sack.is_queued_for_deletion()
+		# === WICHTIG: global speichern (einmal) ===
+		Global.add_score(score)            # aktualisiert Global.total_score & Global.highscores & speichert
+		_apply_progression()               # falls neue Level unlocked wurden, aktualisieren
+		_update_highscore_list()           # UI aus Global.highscores füllen
 
+		# falls Sack zerstört werden soll (Score-basiert)
+		if score >= 150 and is_instance_valid(box_sack):
+			_play_sack_destroy_effect()
+			await get_tree().create_timer(0.35).timeout
+			if is_instance_valid(box_sack):
+				box_sack.queue_free()
 
+# -----------------------
+# Boxsack / Schwellen
+# -----------------------
+func update_box_sack() -> void:
+	if not is_instance_valid(box_sack):
+		return
+	if score >= 150:
+		# Zerstört -> Optional visual
+		box_sack.texture = sack_stages[3]
+	elif score >= 100:
+		box_sack.texture = sack_stages[2]
+	elif score >= 50:
+		box_sack.texture = sack_stages[1]
+	else:
+		box_sack.texture = sack_stages[0]
 
-func increase_score() -> void:
-	var points := 1
-	if game_timer.time_left <= 2.0:
-		points *= 2
-	score += points
-	#update_score_label()
-	camera_shake()
-	play_punch_sound()
-	update_box_sack()   # <--- HIER wird nach Schwellen geprüft
+func _play_sack_destroy_effect() -> void:
+	# kleines Fade-out Tween als Effekt
+	if not box_sack:
+		return
+	var tw = create_tween()
+	tw.tween_property(box_sack, "modulate:a", 0.0, 0.35)
 
+# -----------------------
+# Progression / UI
+# -----------------------
+func _apply_progression() -> void:
+	match Global.unlocked_levels:
+		1:
+			$Background/BackgroundSprite.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0002_7.png")
+			if box_sack:
+				box_sack.texture = load("res://assets/BoxSackBase.png")
+		2:
+			$Background/BackgroundSprite.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0003_6.png")
+			if box_sack:
+				box_sack.texture = load("res://assets/BoxSack2.png")
+		3:
+			$Background/BackgroundSprite.texture = load("res://assets/bg_level3.png")
+			if box_sack:
+				box_sack.texture = load("res://assets/BoxSack3.png")
+
+func _show_pause_screen() -> void:
+	game_active = false
+	pause_screen.visible = true
+	timer_label.visible = false
+	end_screen.visible = false
+	pause_score_label.text = "Score: %d" % score
+	if round < rounds_total:
+		next_round_time = round_durations[round]
+		next_round_time_label.text = "Nächste Runde: %.1f Sekunden" % next_round_time
+		continue_button.disabled = false
+		continue_button.visible = true
+	else:
+		pause_screen.visible = false
+		_show_end_screen()
 
 func _show_end_screen() -> void:
 	end_screen.visible = true
 	final_score_label.text = "Final Score: %d" % score
 	timer_label.visible = false
-#	score_label.visible = false
 
+# -----------------------
+# Highscore UI (liest aus Global.highscores)
+# -----------------------
 func _update_highscore_list() -> void:
-	var text = "Highscores:\n"
-	for i in range(min(10, highscores.size())): # nur Top 10 anzeigen
-		text += "%d. %d\n" % [i + 1, highscores[i]]
+	var text := "Highscores:\n"
+	for i in range(min(10, Global.highscores.size())):
+		text += "%d. %d\n" % [i + 1, Global.highscores[i]]
 	highscore_label.text = text
-	
-const SAVE_FILE = "user://highscores.save"
 
-func save_highscores() -> void:
-	var file = FileAccess.open(SAVE_FILE, FileAccess.WRITE)
-	if file:
-		file.store_var(highscores)
-
-func load_highscores() -> void:
-	if FileAccess.file_exists(SAVE_FILE):
-		var file = FileAccess.open(SAVE_FILE, FileAccess.READ)
-		if file:
-			highscores = file.get_var()
-
-func camera_shake() -> void:
-	for i in 3: # 3 schnelle Wackler
-		var rand_x = randf_range(-10.0, 10.0)
-		var rand_y = randf_range(-10.0, 10.0)
-		game_camera.offset = Vector2(rand_x, rand_y)
-		await get_tree().create_timer(0.4).timeout
-	game_camera.offset = Vector2.ZERO
-	
+# -----------------------
+# Sounds / Camera
+# -----------------------
 func play_punch_sound() -> void:
 	if punch_sounds.is_empty():
 		return
-	var rand_index = randi_range(0, punch_sounds.size() - 1)
+	var rand_index := randi() % punch_sounds.size()
 	punch_sounds[rand_index].play()
 
+func camera_shake() -> void:
+	if not game_camera:
+		return
+	for i in range(3):
+		var rx := randf_range(-12.0, 12.0)
+		var ry := randf_range(-12.0, 12.0)
+		game_camera.offset = Vector2(rx, ry)
+		await get_tree().create_timer(0.04).timeout
+	game_camera.offset = Vector2.ZERO
 
+# -----------------------
+# Retry
+# -----------------------
 func _on_retry_pressed() -> void:
 	get_tree().reload_current_scene()
