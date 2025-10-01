@@ -6,6 +6,7 @@ extends Node2D
 
 @onready var continue_button: Button = $PauseScreen/ContinueButton
 @onready var retry_button: Button = $EndScreen/RetryButton
+@onready var shop_button: Button = $EndScreen/ShopButton
 
 @onready var pause_score_label: Label = $PauseScreen/PauseScoreLabel
 @onready var next_round_time_label: Label = $PauseScreen/NextRoundTimeLabel
@@ -42,6 +43,8 @@ var game_active: bool = false
 var sack_stages: Array[Texture2D] = []  # Texturen für Schaden
 var round_count: int = 0
 # Hinweis: Highscores / total_score liegen jetzt in Global.*
+var coin_scene = preload("res://scenes/Coins.tscn")
+
 
 # -----------------------
 # READY
@@ -130,6 +133,11 @@ func _on_continue_pressed() -> void:
 func _process(_delta: float) -> void:
 	if game_active and not game_timer.is_stopped():
 		timer_label.text = "Time: %.1f" % game_timer.time_left
+	if game_active and randf() < 1: # sehr seltene Chance pro Frame
+		spawn_coin()
+
+
+
 
 func _on_game_timer_timeout() -> void:
 	if not game_active:
@@ -145,6 +153,8 @@ func _on_game_timer_timeout() -> void:
 		end_screen.visible = true
 		final_score_label.text = "Final Score: %d" % score
 		timer_label.visible = false
+		
+
 
 		# === WICHTIG: global speichern (einmal) ===
 		Global.add_score(score)            # aktualisiert Global.total_score & Global.highscores & speichert
@@ -193,11 +203,11 @@ func _apply_progression() -> void:
 		2:
 			$Background/BackgroundSprite.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0003_6.png")
 			if box_sack:
-				box_sack.texture = load("res://assets/BoxSack2.png")
+				box_sack.texture = load("res://assets/BXS2.png")
 		3:
 			$Background/BackgroundSprite.texture = load("res://assets/bg_level3.png")
 			if box_sack:
-				box_sack.texture = load("res://assets/BoxSack3.png")
+				box_sack.texture = load("res://assets/BXS3.png")
 
 func _show_pause_screen() -> void:
 	game_active = false
@@ -214,11 +224,11 @@ func _show_pause_screen() -> void:
 		pause_screen.visible = false
 		_show_end_screen()
 
+
 func _show_end_screen() -> void:
 	end_screen.visible = true
 	final_score_label.text = "Final Score: %d" % score
 	timer_label.visible = false
-
 # -----------------------
 # Highscore UI (liest aus Global.highscores)
 # -----------------------
@@ -246,9 +256,17 @@ func camera_shake() -> void:
 		game_camera.offset = Vector2(rx, ry)
 		await get_tree().create_timer(0.04).timeout
 	game_camera.offset = Vector2.ZERO
-
+	
+func spawn_coin():
+	var coin = coin_scene.instantiate()
+	coin.position = Vector2(400, 300)
+	add_child(coin)
 # -----------------------
 # Retry
 # -----------------------
 func _on_retry_pressed() -> void:
 	get_tree().reload_current_scene()
+
+
+func _on_shop_pressed() -> void:
+	get_tree().change_scene_to_file("res://Shop.tscn")

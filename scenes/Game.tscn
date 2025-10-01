@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://dlunabrdogtq7"]
+[gd_scene load_steps=23 format=3 uid="uid://dlunabrdogtq7"]
 
 [ext_resource type="Texture2D" uid="uid://b8jmy0dqj02ro" path="res://assets/Finger 01.png" id="1_ibkli"]
 [ext_resource type="Script" uid="uid://b7i7tnbt8spwh" path="res://scripts/Game.gd" id="1_qbsmt"]
+[ext_resource type="PackedScene" uid="uid://bwjwu51vthqph" path="res://scenes/Coins.tscn" id="2_attvq"]
 [ext_resource type="Texture2D" uid="uid://c8qs5h4rhsgjh" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0010_1.png" id="2_aug50"]
 [ext_resource type="PackedScene" uid="uid://bcpplx41n15uu" path="res://scenes/click_feedback.tscn" id="2_g4kob"]
 [ext_resource type="Texture2D" uid="uid://1udeim5ihnbv" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0002_7.png" id="3_kiw3p"]
@@ -36,20 +37,24 @@ z_as_relative = false
 position = Vector2(17.5481, 12.7433)
 
 [node name="Layer0004Lights" type="Sprite2D" parent="Background"]
+z_index = -1
 position = Vector2(569, 292)
 scale = Vector2(1.22953, 0.724464)
 texture = ExtResource("2_aug50")
 
 [node name="BackgroundSprite" type="Sprite2D" parent="Background"]
+z_index = -1
 position = Vector2(578.5, 772)
 scale = Vector2(1.2403, 1)
 texture = ExtResource("3_kiw3p")
 
 [node name="Layer0004Lights2" type="Sprite2D" parent="Background"]
+z_index = -1
 position = Vector2(605, -57)
 texture = ExtResource("4_400sg")
 
 [node name="Layer0007Lights" type="Sprite2D" parent="Background"]
+z_index = -1
 position = Vector2(792, 120)
 texture = ExtResource("5_g4kob")
 
@@ -177,10 +182,8 @@ theme_override_font_sizes/font_size = 77
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="EndScreen"]
-offset_left = -2.0
-offset_top = 3.0
-offset_right = 1160.0
-offset_bottom = 650.0
+offset_right = 1162.0
+offset_bottom = 647.0
 color = Color(0.0947514, 0, 0, 0.768627)
 metadata/_edit_use_anchors_ = true
 
@@ -201,5 +204,17 @@ offset_bottom = 649.0
 theme_override_font_sizes/font_size = 22
 metadata/_edit_use_anchors_ = true
 
+[node name="ShopButton" type="Button" parent="EndScreen"]
+offset_left = 400.0
+offset_top = 314.0
+offset_right = 591.0
+offset_bottom = 386.0
+text = "Shop"
+
+[node name="Area2D" parent="." instance=ExtResource("2_attvq")]
+z_index = 1
+position = Vector2(254, 117)
+
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
 [connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_pressed"]

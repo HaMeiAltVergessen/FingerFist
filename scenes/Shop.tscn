@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://daiaf088bqoii"]
+
+[ext_resource type="Script" uid="uid://bterfc3ysab76" path="res://scripts/Shop.gd" id="1_rgcs7"]
+
+[node name="Shop" type="Node2D"]
+script = ExtResource("1_rgcs7")
+
+[node name="SkinList" type="VBoxContainer" parent="."]
+offset_left = 331.0
+offset_top = 126.0
+offset_right = 594.0
+offset_bottom = 211.0
+
+[node name="CoinsLabel" type="Label" parent="."]
+offset_left = 194.0
+offset_top = -12.0
+offset_right = 680.0
+offset_bottom = 65.0
+text = "Coins:"
+horizontal_alignment = 1
+
+[node name="Buy" type="Button" parent="."]
+offset_left = 175.0
+offset_top = 308.0
+offset_right = 396.0
+offset_bottom = 389.0
+text = "Buy"
+
+[node name="Choose" type="Button" parent="."]
+offset_left = 457.0
+offset_top = 304.0
+offset_right = 762.0
+offset_bottom = 385.0
+text = "Choose"
+
+[node name="Return" type="Button" parent="."]
+offset_left = 205.0
+offset_top = 435.0
+offset_right = 709.0
+offset_bottom = 565.0
+text = "Return"
+
+[connection signal="pressed" from="Return" to="." method="_on_return_pressed"]
