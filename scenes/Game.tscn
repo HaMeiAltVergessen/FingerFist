@@ -31,6 +31,10 @@ position = Vector2(585, 325)
 
 [node name="Background" type="CanvasLayer" parent="."]
 
+[node name="Area2D" parent="Background" instance=ExtResource("2_attvq")]
+z_index = 1
+position = Vector2(254, 117)
+
 [node name="ClickFeedback" parent="Background" instance=ExtResource("2_g4kob")]
 z_index = 100
 z_as_relative = false
@@ -210,10 +214,6 @@ offset_top = 314.0
 offset_right = 591.0
 offset_bottom = 386.0
 text = "Shop"
-
-[node name="Area2D" parent="." instance=ExtResource("2_attvq")]
-z_index = 1
-position = Vector2(254, 117)
 
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
 [connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
