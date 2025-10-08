@@ -269,4 +269,4 @@ func _on_retry_pressed() -> void:
 
 
 func _on_shop_pressed() -> void:
-	get_tree().change_scene_to_file("res://Shop.tscn")
+	get_tree().change_scene_to_file("res://scenes/Shop.tscn")

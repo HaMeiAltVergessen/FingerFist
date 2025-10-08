@@ -12,26 +12,11 @@ offset_right = 594.0
 offset_bottom = 211.0
 
 [node name="CoinsLabel" type="Label" parent="."]
-offset_left = 194.0
-offset_top = -12.0
-offset_right = 680.0
-offset_bottom = 65.0
+offset_left = 190.0
+offset_right = 676.0
+offset_bottom = 77.0
 text = "Coins:"
 horizontal_alignment = 1
-
-[node name="Buy" type="Button" parent="."]
-offset_left = 175.0
-offset_top = 308.0
-offset_right = 396.0
-offset_bottom = 389.0
-text = "Buy"
-
-[node name="Choose" type="Button" parent="."]
-offset_left = 457.0
-offset_top = 304.0
-offset_right = 762.0
-offset_bottom = 385.0
-text = "Choose"
 
 [node name="Return" type="Button" parent="."]
 offset_left = 205.0
