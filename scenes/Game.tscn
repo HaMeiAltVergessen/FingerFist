@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://dlunabrdogtq7"]
 
+[ext_resource type="Script" uid="uid://b7i7tnbt8spwh" path="res://scripts/Game.gd" id="1_attvq"]
 [ext_resource type="Texture2D" uid="uid://b8jmy0dqj02ro" path="res://assets/Finger 01.png" id="1_ibkli"]
-[ext_resource type="Script" uid="uid://b7i7tnbt8spwh" path="res://scripts/Game.gd" id="1_qbsmt"]
 [ext_resource type="Texture2D" uid="uid://c8qs5h4rhsgjh" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0010_1.png" id="2_aug50"]
 [ext_resource type="PackedScene" uid="uid://bcpplx41n15uu" path="res://scenes/click_feedback.tscn" id="2_g4kob"]
 [ext_resource type="Texture2D" uid="uid://1udeim5ihnbv" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0002_7.png" id="3_kiw3p"]
@@ -24,7 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://d1ght2py6617r" path="res://spawner.tscn" id="22_attvq"]
 
 [node name="Game" type="Node2D"]
-script = ExtResource("1_qbsmt")
+script = ExtResource("1_attvq")
 
 [node name="GameCamera" type="Camera2D" parent="."]
 position = Vector2(585, 325)
@@ -214,5 +214,8 @@ offset_bottom = 386.0
 text = "Shop"
 
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
+[connection signal="pressed" from="PauseScreen/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_button_pressed"]
 [connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_button_pressed"]
 [connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_pressed"]

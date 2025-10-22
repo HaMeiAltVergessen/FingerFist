@@ -3,6 +3,8 @@ extends Node2D
 # --- Nodes (prüfe Pfade) ---
 @onready var end_screen: CanvasLayer = $EndScreen
 @onready var pause_screen: CanvasLayer = $PauseScreen
+@onready var sprite = $Background/BoxFingerSprite  # falls dein Player ein Sprite2D-Node hat
+
 
 @onready var continue_button: Button = $PauseScreen/ContinueButton
 @onready var retry_button: Button = $EndScreen/RetryButton
@@ -51,7 +53,7 @@ var coin_scene = preload("res://scenes/Coins.tscn")
 # -----------------------
 func _ready() -> void:
 	randomize()
-
+	Global.load_progress()
 	# Progressive Background / BoxSack je nach Global.unlocked_levels
 	_apply_progression()
 
@@ -64,10 +66,9 @@ func _ready() -> void:
 
 	end_screen.visible = false
 	pause_screen.visible = false
+	sprite.texture = Global.get_current_skin_texture()
 
-	continue_button.pressed.connect(_on_continue_pressed)
-	if retry_button and not retry_button.pressed.is_connected(_on_retry_pressed):
-		retry_button.pressed.connect(_on_retry_pressed)
+
 
 	# Sack-Stages laden
 	sack_stages = [
@@ -124,11 +125,6 @@ func _start_round() -> void:
 	game_timer.start()
 	timer_label.text = "Time: %.1f" % game_timer.time_left
 
-func _on_continue_pressed() -> void:
-	continue_button.disabled = true
-	round += 1
-	if round <= rounds_total:
-		_start_round()
 
 func _process(_delta: float) -> void:
 	if game_active and not game_timer.is_stopped():
@@ -205,9 +201,9 @@ func _apply_progression() -> void:
 			if box_sack:
 				box_sack.texture = load("res://assets/BXS2.png")
 		3:
-			$Background/BackgroundSprite.texture = load("res://assets/bg_level3.png")
+			$Background/BackgroundSprite.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0009_2.png")
 			if box_sack:
-				box_sack.texture = load("res://assets/BXS3.png")
+				box_sack.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0009_2.png")
 
 func _show_pause_screen() -> void:
 	game_active = false
@@ -226,9 +222,17 @@ func _show_pause_screen() -> void:
 
 
 func _show_end_screen() -> void:
+	Global.add_score(score)
+	if Global.rounds_played >= 3:
+		Global.rounds_played = 0 # nach Anzeige wieder zurücksetzen
+		get_tree().change_scene_to_file("res://scenes/Shop.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/EndScreen.tscn")
 	end_screen.visible = true
 	final_score_label.text = "Final Score: %d" % score
 	timer_label.visible = false
+	
+
 # -----------------------
 # Highscore UI (liest aus Global.highscores)
 # -----------------------
@@ -267,6 +271,11 @@ func spawn_coin():
 func _on_retry_pressed() -> void:
 	get_tree().reload_current_scene()
 
-
 func _on_shop_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Shop.tscn")
+
+func _on_continue_button_pressed() -> void:
+	continue_button.disabled = true
+	round += 1
+	if round <= rounds_total:
+		_start_round()

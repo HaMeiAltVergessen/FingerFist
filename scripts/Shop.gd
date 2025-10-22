@@ -1,82 +1,95 @@
-extends Node2D    # <- wichtig: für UI-Control-Layout (besser als Node2D)
+extends Node2D
 
 @onready var coins_label: Label = $CoinsLabel
 @onready var skins_list: VBoxContainer = $SkinList
 @onready var back_button: Button = $Return
 
 func _ready() -> void:
-	# Button-Verbindung
-	if not back_button.pressed.is_connected(_on_return_pressed):
-		back_button.pressed.connect(_on_return_pressed)
-	# Erstes UI aufbauen
-	_build_shop_ui()
+	# Lade globale Daten beim Öffnen des Shops
+	Global.load_progress()
+	update_ui()
 
-# baut die gesamte Liste neu auf (löscht vorher alte Einträge)
-func _build_shop_ui() -> void:
-	# coins anzeigen
-	_update_coins_label()
+	# Button-Event
+	back_button.pressed.connect(_on_return_pressed)
+# ----------------------------
+# Skin kaufen
+# ----------------------------
+func _buy_skin(skin_name: String) -> void:
+	var skin = Global.skins[skin_name]
 
-	# Alte Einträge löschen (vermeidet Duplikate)
+	if not skin["owned"]:
+		if Global.coins >= skin["cost"]:
+			Global.coins -= skin["cost"]
+			skin["owned"] = true
+			Global.skins[skin_name] = skin
+			Global.save_progress()
+			update_ui()
+			print("%s gekauft!" % skin_name)
+		else:
+			print("Nicht genug Münzen!")
+func _ensure_skins_valid() -> void:
+	if typeof(Global.skins) != TYPE_DICTIONARY:
+		print("Global.skins ungültig, setze Default")
+		Global.skins = {
+			"default": {"cost": 0, "owned": true},
+			"skin1": {"cost": 500, "owned": false}
+		}
+		Global.save_progress()
+# ----------------------------
+# UI aktualisieren
+# ----------------------------
+func update_ui() -> void:
+	# Alle alten Einträge entfernen (verhindert Doppelung)
 	for child in skins_list.get_children():
 		child.queue_free()
 
-	# Neue Einträge hinzufügen
-	for skin_name in Global.skins.keys():
-		var data = Global.skins[skin_name]
-		var hbox = HBoxContainer.new()
-		hbox.custom_minimum_size = Vector2(0, 36) # optional für Zeilenhöhe
+	# Münzstand anzeigen
+	coins_label.text = "Münzen: %d" % Global.coins
 
+	# Für jeden Skin einen Eintrag mit Label + Button erzeugen
+	for skin_name in Global.skins.keys():
+		var skin_data = Global.skins[skin_name]
+		var hbox = HBoxContainer.new()
+
+		# Name + Kosten
 		var label = Label.new()
-		label.text = "%s (Kosten: %d)" % [skin_name, data["cost"]]
+		label.text = "%s (Kosten: %d)" % [skin_name, skin_data["cost"]]
 		hbox.add_child(label)
 
 		var button = Button.new()
-		# sichere Verbindung mit gebundener Variable
-		if data["owned"]:
-			if Global.current_skin == "res://assets/Finger 01.png":
+
+		if skin_data["owned"]:
+			# Skin gehört dem Spieler – Auswahl möglich
+			if Global.current_skin == skin_name:
 				button.text = "Ausgewählt"
 				button.disabled = true
 			else:
 				button.text = "Auswählen"
-				var c = Callable(self, "_select_skin").bind(skin_name)
-				button.pressed.connect(c)
+				button.pressed.connect(func():
+					_select_skin(skin_name)
+				)
 		else:
+			# Skin ist noch nicht gekauft
 			button.text = "Kaufen"
-			var cbuy = Callable(self, "_buy_skin").bind("res://assets/Finger 02.png")
-			button.pressed.connect(cbuy)
+			button.pressed.connect(func():
+				_buy_skin(skin_name)
+			)
 
 		hbox.add_child(button)
 		skins_list.add_child(hbox)
 
-func _update_coins_label() -> void:
-	coins_label.text = "Münzen: %d" % Global.coins
-
-# -------------------
-# Aktionen
-# -------------------
+# ----------------------------
+# Skin auswählen
+# ----------------------------
 func _select_skin(skin_name: String) -> void:
 	Global.current_skin = skin_name
 	Global.save_progress()
-	_build_shop_ui()        # UI aktualisieren (Buttons / Ausgewählt-Status)
-	_update_coins_label()
+	update_ui()
+	print("%s wurde ausgewählt!" % skin_name)
 
-func _buy_skin(skin_name: String) -> void:
-	var skin = Global.skins.get(skin_name)
-	if skin == null:
-		return
-	if skin["owned"]:
-		return
-	if Global.coins >= skin["cost"]:
-		Global.coins -= skin["cost"]
-		skin["owned"] = true
-		Global.skins[skin_name] = skin
-		Global.save_progress()
-		_build_shop_ui()
-		_update_coins_label()
-	else:
-		# Optional: zeige ein Popup oder Sound
-		print("Nicht genug Münzen!")
 
+# ----------------------------
+# Zurück zum Endscreen
+# ----------------------------
 func _on_return_pressed() -> void:
-	# Zurück zur EndScreen (oder zu Game/Highscore je nach Flow)
 	get_tree().change_scene_to_file("res://scenes/Game.tscn")

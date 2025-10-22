@@ -5,18 +5,18 @@
 [node name="Shop" type="Node2D"]
 script = ExtResource("1_rgcs7")
 
-[node name="SkinList" type="VBoxContainer" parent="."]
-offset_left = 331.0
-offset_top = 126.0
-offset_right = 594.0
-offset_bottom = 211.0
-
 [node name="CoinsLabel" type="Label" parent="."]
 offset_left = 190.0
 offset_right = 676.0
 offset_bottom = 77.0
 text = "Coins:"
 horizontal_alignment = 1
+
+[node name="SkinList" type="VBoxContainer" parent="."]
+offset_left = 331.0
+offset_top = 126.0
+offset_right = 594.0
+offset_bottom = 211.0
 
 [node name="Return" type="Button" parent="."]
 offset_left = 205.0
