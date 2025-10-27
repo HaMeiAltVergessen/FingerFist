@@ -5,6 +5,7 @@ extends Node2D
 @onready var pause_screen: CanvasLayer = $PauseScreen
 @onready var sprite = $Background/BoxFingerSprite  # falls dein Player ein Sprite2D-Node hat
 
+@onready var coin_layer: CanvasLayer = $CoinLayer
 
 @onready var continue_button: Button = $PauseScreen/ContinueButton
 @onready var retry_button: Button = $EndScreen/RetryButton
@@ -46,47 +47,38 @@ var sack_stages: Array[Texture2D] = []  # Texturen für Schaden
 var round_count: int = 0
 # Hinweis: Highscores / total_score liegen jetzt in Global.*
 var coin_scene = preload("res://scenes/Coins.tscn")
-
+# Coin-Spawn-Kontrolle
+var coin_timer: float = 0.0
+var coin_spawn_interval := 1.5 # Sekunden zwischen Spawns
+var can_spawn_coins: bool = false
 
 # -----------------------
 # READY
 # -----------------------
 func _ready() -> void:
 	randomize()
+	can_spawn_coins = false   # WICHTIG: am Scene-Start niemals spawnen
 	Global.load_progress()
-	# Progressive Background / BoxSack je nach Global.unlocked_levels
 	_apply_progression()
-
-	# Initialisierung
 	round = 0
 	score = 0
 	round_durations.clear()
 	for i in range(rounds_total):
 		round_durations.append(randf_range(3.0, 6.0))
-
 	end_screen.visible = false
 	pause_screen.visible = false
 	sprite.texture = Global.get_current_skin_texture()
-
-
-
 	# Sack-Stages laden
 	sack_stages = [
-		load("res://assets/BoxSackBase.png"),  # 0 = Basis
-		load("res://assets/BXS1.png"),        # 1 = ab 50
-		load("res://assets/BXS2.png"),        # 2 = ab 100
-		load("res://assets/BXS3.png")         # 3 = zerstört / alternativ
+		load("res://assets/BoxSackBase.png"),
+		load("res://assets/BXS1.png"),
+		load("res://assets/BXS2.png"),
+		load("res://assets/BXS3.png")
 	]
 	if box_sack:
 		box_sack.texture = sack_stages[0]
-
 	game_camera.make_current()
-
-	# Progression / Highscores aus Global laden und UI aktualisieren
-	Global.load_progress()
 	_update_highscore_list()
-
-	# Starte Pause-Screen vor der ersten Runde
 	_show_pause_screen()
 
 # -----------------------
@@ -127,23 +119,34 @@ func _start_round() -> void:
 
 
 func _process(_delta: float) -> void:
-	if game_active and not game_timer.is_stopped():
-		timer_label.text = "Time: %.1f" % game_timer.time_left
-	if game_active and randf() < 1: # sehr seltene Chance pro Frame
-		spawn_coin()
+	if not game_active:
+		return
+	if get_tree().paused:
+		return
+	if game_timer.is_stopped():
+		return
 
+	# Timer-Update / Label
+	timer_label.text = "Time: %.1f" % game_timer.time_left
 
-
-
+	# coin spawn nur wenn freigegeben
+	if can_spawn_coins:
+		coin_timer += _delta
+		if coin_timer >= coin_spawn_interval:
+			coin_timer = 0.0
+			coin_spawn_interval = randf_range(1.0, 2.5)
+			spawn_coin()
 func _on_game_timer_timeout() -> void:
 	if not game_active:
 		return
 	game_active = false
+	can_spawn_coins = false
 	round_count += 1
 
 	# Falls noch Runden übrig -> Pause
 	if round_count < rounds_total:
 		_show_pause_screen()
+
 	else:
 		# Runde komplettiert -> Endscreen
 		end_screen.visible = true
@@ -207,6 +210,7 @@ func _apply_progression() -> void:
 
 func _show_pause_screen() -> void:
 	game_active = false
+	can_spawn_coins = false     # kein Spawning während Pause
 	pause_screen.visible = true
 	timer_label.visible = false
 	end_screen.visible = false
@@ -261,10 +265,37 @@ func camera_shake() -> void:
 		await get_tree().create_timer(0.04).timeout
 	game_camera.offset = Vector2.ZERO
 	
-func spawn_coin():
+# -----------------------
+# Coin
+# -----------------------
+func spawn_coin() -> void:
+	if not game_active or not can_spawn_coins:
+		return
+
+	# instantiate
 	var coin = coin_scene.instantiate()
-	coin.position = Vector2(400, 300)
-	add_child(coin)
+
+	# position über Spielbereich
+	coin.position = Vector2(randf_range(100, 700), -20)
+
+	# Füge IMMER in coin_layer ein — kein fallback add_child
+	if coin_layer == null:
+		push_error("CoinLayer nicht gefunden! Pfad prüfen.")
+		return
+
+	coin_layer.add_child(coin)
+
+	# sicherstellen, dass coin pausiert, wenn Spiel pausiert
+	coin.process_mode = Node.PROCESS_MODE_PAUSABLE
+
+	# Wenn CoinLayer kein CanvasLayer ist, setze z_index, ansonsten setze layer
+	if coin_layer is CanvasLayer:
+		# CanvasLayer wird oben aufgerendert; du kannst layer höher setzen, falls nötig
+		coin_layer.layer = 1
+	else:
+		# Node2D -> z_index am Coin
+		if coin is CanvasItem:
+			coin.z_index = 100
 # -----------------------
 # Retry
 # -----------------------
@@ -277,5 +308,7 @@ func _on_shop_pressed() -> void:
 func _on_continue_button_pressed() -> void:
 	continue_button.disabled = true
 	round += 1
+	coin_timer = 0.0
 	if round <= rounds_total:
+		can_spawn_coins = true     # Coins dürfen wieder spawnen
 		_start_round()

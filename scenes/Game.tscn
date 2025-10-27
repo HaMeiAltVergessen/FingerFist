@@ -29,7 +29,10 @@ script = ExtResource("1_attvq")
 [node name="GameCamera" type="Camera2D" parent="."]
 position = Vector2(585, 325)
 
+[node name="CoinLayer" type="CanvasLayer" parent="."]
+
 [node name="Background" type="CanvasLayer" parent="."]
+layer = 0
 
 [node name="Main" parent="Background" instance=ExtResource("22_attvq")]
 
