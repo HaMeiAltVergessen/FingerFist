@@ -15,7 +15,7 @@ func _ready():
 func spawn_next_coin():
 	if coins_spawned >= coins_to_spawn:
 		return
-	# Coin instanziieren
+
 	var coin = coin_scene.instantiate()
 
 	# Zufällige X-Position am oberen Rand
@@ -23,8 +23,11 @@ func spawn_next_coin():
 	coin.global_position.x = randi_range(16, viewport_width - 16)
 	coin.global_position.y = 0
 
-	# Zufällige Beschleunigung/Speed der einzelnen Coin
-	coin.acceleration = randf_range(min_acceleration, max_acceleration)
+	# Zufällige Anfangs-Geschwindigkeit oder Gravitation
+	# Variante A (Startgeschwindigkeit):
+	coin.vel_y = randf_range(min_acceleration, max_acceleration)
+	# Variante B (Schwerkraft):
+	# coin.gravity_force = randf_range(min_acceleration, max_acceleration)
 
 	add_child(coin)
 
