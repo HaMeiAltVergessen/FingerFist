@@ -21,7 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://brgaar6u0c06e" path="res://Audio/BoxPunch08.mp3" id="18_0bq3a"]
 [ext_resource type="AudioStream" uid="uid://xbppsmmniub0" path="res://Audio/BoxPunch09.mp3" id="19_754j2"]
 [ext_resource type="AudioStream" uid="uid://cwhwhslpss8ag" path="res://Audio/BoxPunch10.mp3" id="20_i4jil"]
-[ext_resource type="PackedScene" uid="uid://d1ght2py6617r" path="res://spawner.tscn" id="22_attvq"]
+[ext_resource type="PackedScene" uid="uid://d1ght2py6617r" path="res://scenes/spawner.tscn" id="22_attvq"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_attvq")
@@ -194,26 +194,35 @@ metadata/_edit_use_anchors_ = true
 
 [node name="RetryButton" type="Button" parent="EndScreen"]
 z_index = 1
-offset_left = 122.0
-offset_top = 286.0
-offset_right = 254.0
-offset_bottom = 440.0
-theme_override_font_sizes/font_size = 44
+anchors_preset = -1
+anchor_left = 0.0147569
+anchor_top = -0.192901
+anchor_right = 0.0850694
+anchor_bottom = -0.121914
+offset_left = 62.0
+offset_top = 363.0
+offset_right = 194.0
+offset_bottom = 517.0
+theme_override_font_sizes/font_size = 22
 text = "Retry"
 metadata/_edit_use_anchors_ = true
 
 [node name="HighscoreLabel" type="Label" parent="EndScreen"]
-offset_left = 899.0
-offset_right = 1123.0
-offset_bottom = 649.0
+anchors_preset = -1
+anchor_left = 0.116319
+anchor_right = 0.196181
+offset_left = 658.0
+offset_top = -4.0
+offset_right = 882.0
+offset_bottom = 645.0
 theme_override_font_sizes/font_size = 22
 metadata/_edit_use_anchors_ = true
 
 [node name="ShopButton" type="Button" parent="EndScreen"]
-offset_left = 400.0
-offset_top = 314.0
-offset_right = 591.0
-offset_bottom = 386.0
+offset_left = 378.0
+offset_top = 258.0
+offset_right = 569.0
+offset_bottom = 420.0
 text = "Shop"
 
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]

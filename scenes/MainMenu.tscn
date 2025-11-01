@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://4vxgntmtjd1p"]
+[gd_scene load_steps=3 format=3 uid="uid://4vxgntmtjd1p"]
 
 [ext_resource type="Script" uid="uid://cgbelsi85bf64" path="res://scripts/MainMenu.gd" id="1_yqorp"]
+[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Audio/Fingerfist Ost 05.mp3" id="2_0ykhv"]
 
 [node name="MainMenu" type="Node2D"]
 
@@ -62,3 +63,15 @@ offset_right = 700.0
 offset_bottom = 555.0
 text = "Quit
 "
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_0ykhv")
+volume_db = -7.495
+pitch_scale = 0.7
+autoplay = true
+
+[connection signal="pressed" from="StartButton" to="ColorRect" method="_on_start_button_pressed"]
+[connection signal="pressed" from="HighscoreButton" to="ColorRect" method="_on_highscore_pressed"]
+[connection signal="pressed" from="OptionButton" to="ColorRect" method="_on_option_pressed"]
+[connection signal="pressed" from="CreditsButton" to="ColorRect" method="_on_credits_pressed"]
+[connection signal="pressed" from="QuitButton" to="ColorRect" method="_on_quit_pressed"]

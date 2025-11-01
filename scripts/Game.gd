@@ -142,19 +142,14 @@ func _on_game_timer_timeout() -> void:
 	game_active = false
 	can_spawn_coins = false
 	round_count += 1
-
 	# Falls noch Runden übrig -> Pause
 	if round_count < rounds_total:
 		_show_pause_screen()
-
 	else:
 		# Runde komplettiert -> Endscreen
 		end_screen.visible = true
 		final_score_label.text = "Final Score: %d" % score
 		timer_label.visible = false
-		
-
-
 		# === WICHTIG: global speichern (einmal) ===
 		Global.add_score(score)            # aktualisiert Global.total_score & Global.highscores & speichert
 		_apply_progression()               # falls neue Level unlocked wurden, aktualisieren
