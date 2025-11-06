@@ -21,19 +21,19 @@ extends Node2D
 @onready var box_sack: Sprite2D = $GameScreen/BoxSack
 @onready var game_camera: Camera2D = $GameCamera
 
-@onready var box_sound1: AudioStreamPlayer = $BoxSound1
-@onready var box_sound2: AudioStreamPlayer = $BoxSound2
 @onready var punch_sounds: Array[AudioStreamPlayer] = [
-	$BoxPunch01,
-	$BoxPunch02,
-	$BoxPunch03,
-	$BoxPunch04,
-	$BoxPunch05,
-	$BoxPunch06,
-	$BoxPunch07,
-	$BoxPunch08,
-	$BoxPunch09,
-	$BoxPunch10
+	$Sounds/BoxSound1, 
+	$Sounds/BoxSound2, 
+	$Sounds/BoxPunch01, 
+	$Sounds/BoxPunch02, 
+	$Sounds/BoxPunch03, 
+	$Sounds/BoxPunch04, 
+	$Sounds/BoxPunch05, 
+	$Sounds/BoxPunch06, 
+	$Sounds/BoxPunch07, 
+	$Sounds/BoxPunch08, 
+	$Sounds/BoxPunch09, 
+	$Sounds/BoxPunch10
 ]
 
 # --- Spielvariablen ---
@@ -70,9 +70,9 @@ func _ready() -> void:
 	sprite.texture = Global.get_current_skin_texture()
 	# Sack-Stages laden
 	sack_stages = [
-		load("res://assets/BoxSackBase.png"),
-		load("res://assets/BXS1.png"),
-		load("res://assets/BXS2.png"),
+		load("res://assets/EigeneAssets/Wall01.png"),
+		load("res://assets/EigeneAssets/Wand02.png"),
+		load("res://assets/EigeneAssets/Wand03.png"),
 		load("res://assets/BXS3.png")
 	]
 	if box_sack:
@@ -191,17 +191,17 @@ func _play_sack_destroy_effect() -> void:
 func _apply_progression() -> void:
 	match Global.unlocked_levels:
 		1:
-			$Background/BackgroundSprite.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0002_7.png")
+			$Background/BackgroundSprite.texture = load("res://assets/EigeneAssets/Background01.png")
 			if box_sack:
-				box_sack.texture = load("res://assets/BoxSackBase.png")
+				box_sack.texture = load("res://assets/EigeneAssets/Wall01.png")
 		2:
-			$Background/BackgroundSprite.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0003_6.png")
+			$Background/BackgroundSprite.texture = load("res://assets/EigeneAssets/background03.png")
 			if box_sack:
-				box_sack.texture = load("res://assets/BXS2.png")
+				box_sack.texture = load("res://assets/EigeneAssets/Wand02.png")
 		3:
-			$Background/BackgroundSprite.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0009_2.png")
+			$Background/BackgroundSprite.texture = load("res://assets/EigeneAssets/background05.png")
 			if box_sack:
-				box_sack.texture = load("res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0009_2.png")
+				box_sack.texture = load("res://assets/EigeneAssets/Wand03.png")
 
 func _show_pause_screen() -> void:
 	game_active = false

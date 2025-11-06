@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://4vxgntmtjd1p"]
 
 [ext_resource type="Script" uid="uid://cgbelsi85bf64" path="res://scripts/MainMenu.gd" id="1_yqorp"]
-[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Audio/Fingerfist Ost 05.mp3" id="2_0ykhv"]
+[ext_resource type="AudioStream" uid="uid://cp43igsy71fo4" path="res://Audio/Music/Fingerfist Main01.mp3" id="2_0ykhv"]
 
 [node name="MainMenu" type="Node2D"]
 
@@ -67,7 +67,6 @@ text = "Quit
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_0ykhv")
 volume_db = -7.495
-pitch_scale = 0.7
 autoplay = true
 
 [connection signal="pressed" from="StartButton" to="ColorRect" method="_on_start_button_pressed"]

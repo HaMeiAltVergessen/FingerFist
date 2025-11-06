@@ -1,27 +1,54 @@
-[gd_scene load_steps=23 format=3 uid="uid://dlunabrdogtq7"]
+[gd_scene load_steps=34 format=3 uid="uid://dlunabrdogtq7"]
 
 [ext_resource type="Script" uid="uid://b7i7tnbt8spwh" path="res://scripts/Game.gd" id="1_attvq"]
-[ext_resource type="Texture2D" uid="uid://b8jmy0dqj02ro" path="res://assets/Finger 01.png" id="1_ibkli"]
-[ext_resource type="Texture2D" uid="uid://c8qs5h4rhsgjh" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0010_1.png" id="2_aug50"]
+[ext_resource type="Texture2D" uid="uid://b8jmy0dqj02ro" path="res://assets/EigeneAssets/Finger 01.png" id="1_ibkli"]
+[ext_resource type="Texture2D" uid="uid://c12iwcxaxflct" path="res://assets/EigeneAssets/Background02.png" id="2_1gdd5"]
 [ext_resource type="PackedScene" uid="uid://bcpplx41n15uu" path="res://scenes/click_feedback.tscn" id="2_g4kob"]
-[ext_resource type="Texture2D" uid="uid://1udeim5ihnbv" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0002_7.png" id="3_kiw3p"]
-[ext_resource type="Texture2D" uid="uid://c6v3oebdvy1km" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0004_Lights.png" id="4_400sg"]
-[ext_resource type="Texture2D" uid="uid://ddh7bnulnr26m" path="res://assets/Free Pixel Art Forest/PNG/Background layers/Layer_0007_Lights.png" id="5_g4kob"]
-[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Audio/Fingerfist Ost 05.mp3" id="7_kiw3p"]
-[ext_resource type="Texture2D" uid="uid://o84s4exwsvfa" path="res://assets/BoxSackBase.png" id="8_400sg"]
+[ext_resource type="Texture2D" uid="uid://c1o4l63w4ckdf" path="res://assets/EigeneAssets/Background01.png" id="3_426vi"]
+[ext_resource type="AudioStream" uid="uid://dgebhepbig85d" path="res://Audio/Music/Fingerfist Ost 07 (1).mp3" id="6_ocgqw"]
+[ext_resource type="AudioStream" uid="uid://d3v3rvowdhhry" path="res://Audio/Music/Fingerfist Ost 11.mp3" id="7_i4jil"]
+[ext_resource type="AudioStream" uid="uid://cjyv4d7xppspe" path="res://Audio/Music/Fingerfist Ost 07.mp3" id="7_jbgew"]
+[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Audio/Music/Fingerfist Ost 05.mp3" id="7_kiw3p"]
+[ext_resource type="Texture2D" uid="uid://o84s4exwsvfa" path="res://assets/EigeneAssets/BoxSackBase.png" id="8_400sg"]
+[ext_resource type="AudioStream" uid="uid://bbekyck4k7vno" path="res://Audio/Music/Fingerfist Ost 08 (1).mp3" id="8_a85ww"]
+[ext_resource type="AudioStream" uid="uid://f1olby2kt8gn" path="res://Audio/Music/Fingerfist Ost 12.mp3" id="8_jai3c"]
 [ext_resource type="AudioStream" uid="uid://b17h3d586mk5r" path="res://Audio/BoxSound1.wav" id="8_qy1jj"]
+[ext_resource type="AudioStream" uid="uid://k3ds57r5l40v" path="res://Audio/Music/Fingerfist Ost 12 (1).mp3" id="9_1gdd5"]
 [ext_resource type="AudioStream" uid="uid://duk17ewh4xgh6" path="res://Audio/BoxSound2.wav" id="9_3xj3m"]
+[ext_resource type="AudioStream" uid="uid://3u5jmyuw1c8b" path="res://Audio/Music/Fingerfist Ost 08.mp3" id="9_jhsr3"]
+[ext_resource type="AudioStream" uid="uid://bf1orqdv5elq7" path="res://Audio/Music/Fingerfist Ost 09 (1).mp3" id="10_0bq3a"]
+[ext_resource type="AudioStream" uid="uid://dweui4w07xsmv" path="res://Audio/Music/Fingerfist Ost 09 (2).mp3" id="11_754j2"]
 [ext_resource type="AudioStream" uid="uid://wv1c8tk7ch17" path="res://Audio/BoxPunch01.wav" id="11_a8wo8"]
 [ext_resource type="AudioStream" uid="uid://dt6ftmxs8phlw" path="res://Audio/BoxPunch02.mp3" id="12_attvq"]
 [ext_resource type="AudioStream" uid="uid://dsp21su6j3epe" path="res://Audio/BoxPunch03.mp3" id="13_bneo8"]
 [ext_resource type="AudioStream" uid="uid://c0fsbjhoy6tu6" path="res://Audio/BoxPunch04.mp3" id="14_ocgqw"]
+[ext_resource type="AudioStream" uid="uid://douxtcf8ev4or" path="res://Audio/Music/Fingerfist Ost 09.mp3" id="15_426vi"]
 [ext_resource type="AudioStream" uid="uid://cirflbajr54fx" path="res://Audio/BoxPunch05.mp3" id="15_jbgew"]
 [ext_resource type="AudioStream" uid="uid://doicjx40w8rk7" path="res://Audio/BoxPunch06.mp3" id="16_a85ww"]
+[ext_resource type="AudioStream" uid="uid://qf64x4kagxss" path="res://Audio/Music/Fingerfist Ost 10.mp3" id="16_naigu"]
 [ext_resource type="AudioStream" uid="uid://drso6dywxqkdi" path="res://Audio/BoxPunch07.mp3" id="17_jhsr3"]
+[ext_resource type="AudioStream" uid="uid://dr6c2s13h8ti3" path="res://Audio/Music/Fingerfist Ost 11 (1).mp3" id="17_m1oc7"]
 [ext_resource type="AudioStream" uid="uid://brgaar6u0c06e" path="res://Audio/BoxPunch08.mp3" id="18_0bq3a"]
 [ext_resource type="AudioStream" uid="uid://xbppsmmniub0" path="res://Audio/BoxPunch09.mp3" id="19_754j2"]
 [ext_resource type="AudioStream" uid="uid://cwhwhslpss8ag" path="res://Audio/BoxPunch10.mp3" id="20_i4jil"]
 [ext_resource type="PackedScene" uid="uid://d1ght2py6617r" path="res://scenes/spawner.tscn" id="22_attvq"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i4jil"]
+playback_mode = 1
+streams_count = 13
+stream_0/stream = ExtResource("7_kiw3p")
+stream_1/stream = ExtResource("6_ocgqw")
+stream_2/stream = ExtResource("7_jbgew")
+stream_3/stream = ExtResource("8_a85ww")
+stream_4/stream = ExtResource("9_jhsr3")
+stream_5/stream = ExtResource("10_0bq3a")
+stream_6/stream = ExtResource("11_754j2")
+stream_7/stream = ExtResource("15_426vi")
+stream_8/stream = ExtResource("16_naigu")
+stream_9/stream = ExtResource("17_m1oc7")
+stream_10/stream = ExtResource("7_i4jil")
+stream_11/stream = ExtResource("8_jai3c")
+stream_12/stream = ExtResource("9_1gdd5")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_attvq")
@@ -34,6 +61,18 @@ position = Vector2(585, 325)
 [node name="Background" type="CanvasLayer" parent="."]
 layer = 0
 
+[node name="BackgroundSky" type="Sprite2D" parent="Background"]
+z_index = -1
+position = Vector2(580.75, 316.75)
+scale = Vector2(18.0078, 10.1328)
+texture = ExtResource("2_1gdd5")
+
+[node name="BackgroundSprite" type="Sprite2D" parent="Background"]
+z_index = -1
+position = Vector2(585.5, 326.5)
+scale = Vector2(18.0156, 10.1094)
+texture = ExtResource("3_426vi")
+
 [node name="Main" parent="Background" instance=ExtResource("22_attvq")]
 
 [node name="ClickFeedback" parent="Background" instance=ExtResource("2_g4kob")]
@@ -41,83 +80,63 @@ z_index = 100
 z_as_relative = false
 position = Vector2(17.5481, 12.7433)
 
-[node name="Layer0004Lights" type="Sprite2D" parent="Background"]
-z_index = -1
-position = Vector2(569, 292)
-scale = Vector2(1.22953, 0.724464)
-texture = ExtResource("2_aug50")
-
-[node name="BackgroundSprite" type="Sprite2D" parent="Background"]
-z_index = -1
-position = Vector2(578.5, 772)
-scale = Vector2(1.2403, 1)
-texture = ExtResource("3_kiw3p")
-
-[node name="Layer0004Lights2" type="Sprite2D" parent="Background"]
-z_index = -1
-position = Vector2(605, -57)
-texture = ExtResource("4_400sg")
-
-[node name="Layer0007Lights" type="Sprite2D" parent="Background"]
-z_index = -1
-position = Vector2(792, 120)
-texture = ExtResource("5_g4kob")
-
 [node name="BoxFingerSprite" type="Sprite2D" parent="Background"]
 position = Vector2(717, 439)
 scale = Vector2(5.26563, 5.54688)
 texture = ExtResource("1_ibkli")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_kiw3p")
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_i4jil")
 volume_db = -25.297
 autoplay = true
 
-[node name="BoxSound1" type="AudioStreamPlayer" parent="."]
+[node name="Sounds" type="AudioStreamPlayer" parent="."]
+
+[node name="BoxSound1" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_qy1jj")
 volume_db = -20.0
 
-[node name="BoxSound2" type="AudioStreamPlayer" parent="."]
+[node name="BoxSound2" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("9_3xj3m")
 volume_db = -20.0
 
-[node name="BoxPunch01" type="AudioStreamPlayer" parent="."]
+[node name="BoxPunch01" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("11_a8wo8")
 volume_db = -20.0
 
-[node name="BoxPunch02" type="AudioStreamPlayer" parent="."]
+[node name="BoxPunch02" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("12_attvq")
 volume_db = -20.0
 
-[node name="BoxPunch03" type="AudioStreamPlayer" parent="."]
+[node name="BoxPunch03" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("13_bneo8")
 volume_db = -20.0
 
-[node name="BoxPunch04" type="AudioStreamPlayer" parent="."]
+[node name="BoxPunch04" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("14_ocgqw")
 volume_db = -20.0
 
-[node name="BoxPunch05" type="AudioStreamPlayer" parent="."]
+[node name="BoxPunch05" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("15_jbgew")
 volume_db = -20.0
 
-[node name="BoxPunch06" type="AudioStreamPlayer" parent="."]
+[node name="BoxPunch06" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("16_a85ww")
 volume_db = -20.0
 
-[node name="BoxPunch07" type="AudioStreamPlayer" parent="."]
+[node name="BoxPunch07" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("17_jhsr3")
 volume_db = -20.0
 
-[node name="BoxPunch08" type="AudioStreamPlayer" parent="."]
+[node name="BoxPunch08" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("18_0bq3a")
 volume_db = -20.0
 
-[node name="BoxPunch09" type="AudioStreamPlayer" parent="."]
+[node name="BoxPunch09" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("19_754j2")
 volume_db = -20.0
 
-[node name="BoxPunch10" type="AudioStreamPlayer" parent="."]
+[node name="BoxPunch10" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("20_i4jil")
 volume_db = -20.0
 
@@ -227,7 +246,7 @@ text = "Shop"
 
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
 [connection signal="pressed" from="PauseScreen/ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_button_pressed"]
-[connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_pressed"]
+[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_button_pressed"]
+[connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_pressed"]

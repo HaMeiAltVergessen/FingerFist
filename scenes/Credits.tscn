@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dhxeh83wix176"]
 
 [ext_resource type="Script" uid="uid://ccqlcyul1lj74" path="res://scenes/credits.gd" id="1_spvsy"]
-[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Audio/Fingerfist Ost 05.mp3" id="2_gw1d4"]
+[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Audio/Music/Fingerfist Ost 05.mp3" id="2_gw1d4"]
 
 [node name="Credits" type="Node2D"]
 script = ExtResource("1_spvsy")

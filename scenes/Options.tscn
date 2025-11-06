@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bhsa7g0hs5vb8"]
 
 [ext_resource type="Script" uid="uid://qhqdpk2sn1rl" path="res://scenes/options.gd" id="1_j6yq7"]
-[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Audio/Fingerfist Ost 05.mp3" id="2_ckjey"]
+[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Audio/Music/Fingerfist Ost 05.mp3" id="2_ckjey"]
 
 [node name="Options" type="Control"]
 layout_mode = 3

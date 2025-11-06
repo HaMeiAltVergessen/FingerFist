@@ -16,8 +16,8 @@ var skins = {
 }
 # Zuordnung der Skins zu Texturen (Passe Pfade an deine Assets an)
 const SKIN_TEXTURES = {
-	"default": preload("res://assets/Finger 01.png"),
-	"skin1": preload("res://assets/Finger 02.png")
+	"default": preload("res://assets/EigeneAssets/Finger 01.png"),
+	"skin1": preload("res://assets/EigeneAssets/Finger 02.png")
 }
 const SAVE_FILE := "user://progression.save"
 # Gibt die aktuelle Textur zurück

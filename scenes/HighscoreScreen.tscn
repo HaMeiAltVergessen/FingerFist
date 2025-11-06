@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bd1ru1cfoi4mk"]
 
 [ext_resource type="Script" uid="uid://bgkj03s2r2cco" path="res://scenes/HighscoreScreen.gd" id="1_vvh6p"]
-[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Audio/Fingerfist Ost 05.mp3" id="2_dbk2a"]
+[ext_resource type="AudioStream" uid="uid://d2lqhmqvgerhb" path="res://Audio/Music/Fingerfist Ost 05.mp3" id="2_dbk2a"]
 
 [node name="HighscoreScreen" type="Node2D"]
 script = ExtResource("1_vvh6p")
