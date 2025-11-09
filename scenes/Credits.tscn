@@ -27,14 +27,17 @@ autoplay = true
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_left = 300.0
 offset_top = 185.0
-offset_right = 429.0
-offset_bottom = 478.0
+offset_right = 677.0
+offset_bottom = 517.0
 theme_override_font_sizes/normal_font_size = 21
 text = "Credits:
 
-Sebastian 
-Luca
-Chat"
+Sebastian Raabe
+Luca Thomas Mahncke
+
+Externe Assets:
+PixelFantasy Cave by Szadiart 
+Free Pixel Art Forest by Eder Muniz"
 
 [node name="MainMenu" type="Button" parent="."]
 offset_left = 692.0

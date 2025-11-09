@@ -246,7 +246,7 @@ text = "Shop"
 
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
 [connection signal="pressed" from="PauseScreen/ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_button_pressed"]
-[connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_pressed"]
+[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_button_pressed"]
+[connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_pressed"]
