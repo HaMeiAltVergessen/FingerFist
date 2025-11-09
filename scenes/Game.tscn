@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://b7i7tnbt8spwh" path="res://scripts/Game.gd" id="1_attvq"]
 [ext_resource type="Texture2D" uid="uid://b8jmy0dqj02ro" path="res://assets/EigeneAssets/Finger 01.png" id="1_ibkli"]
-[ext_resource type="Texture2D" uid="uid://c12iwcxaxflct" path="res://assets/EigeneAssets/Background02.png" id="2_1gdd5"]
+[ext_resource type="Texture2D" uid="uid://dtauprx27sw77" path="res://assets/ExterneAssets/background2.png" id="2_1gdd5"]
 [ext_resource type="PackedScene" uid="uid://bcpplx41n15uu" path="res://scenes/click_feedback.tscn" id="2_g4kob"]
-[ext_resource type="Texture2D" uid="uid://c1o4l63w4ckdf" path="res://assets/EigeneAssets/Background01.png" id="3_426vi"]
+[ext_resource type="Texture2D" uid="uid://dxhk82p8d6gay" path="res://assets/ExterneAssets/background3.png" id="3_426vi"]
 [ext_resource type="AudioStream" uid="uid://dgebhepbig85d" path="res://Audio/Music/Fingerfist Ost 07 (1).mp3" id="6_ocgqw"]
 [ext_resource type="AudioStream" uid="uid://d3v3rvowdhhry" path="res://Audio/Music/Fingerfist Ost 11.mp3" id="7_i4jil"]
 [ext_resource type="AudioStream" uid="uid://cjyv4d7xppspe" path="res://Audio/Music/Fingerfist Ost 07.mp3" id="7_jbgew"]
@@ -61,16 +61,16 @@ position = Vector2(585, 325)
 [node name="Background" type="CanvasLayer" parent="."]
 layer = 0
 
+[node name="BackgroundSprite" type="Sprite2D" parent="Background"]
+z_index = -1
+position = Vector2(586, 286)
+scale = Vector2(1.18132, 1.49235)
+texture = ExtResource("2_1gdd5")
+
 [node name="BackgroundSky" type="Sprite2D" parent="Background"]
 z_index = -1
 position = Vector2(580.75, 316.75)
-scale = Vector2(18.0078, 10.1328)
-texture = ExtResource("2_1gdd5")
-
-[node name="BackgroundSprite" type="Sprite2D" parent="Background"]
-z_index = -1
-position = Vector2(585.5, 326.5)
-scale = Vector2(18.0156, 10.1094)
+scale = Vector2(1.20596, 1.42089)
 texture = ExtResource("3_426vi")
 
 [node name="Main" parent="Background" instance=ExtResource("22_attvq")]
@@ -246,7 +246,7 @@ text = "Shop"
 
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
 [connection signal="pressed" from="PauseScreen/ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_button_pressed"]
 [connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_pressed"]
-[connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_button_pressed"]
+[connection signal="pressed" from="EndScreen/RetryButton" to="." method="_on_retry_button_pressed"]
 [connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_pressed"]
+[connection signal="pressed" from="EndScreen/ShopButton" to="." method="_on_shop_button_pressed"]

@@ -1,9 +1,59 @@
-[gd_scene load_steps=3 format=3 uid="uid://4vxgntmtjd1p"]
+[gd_scene load_steps=8 format=3 uid="uid://4vxgntmtjd1p"]
 
+[ext_resource type="Texture2D" uid="uid://dy76ngsjborkl" path="res://assets/ExterneAssets/Layer_0009_2.png" id="1_ucygd"]
 [ext_resource type="Script" uid="uid://cgbelsi85bf64" path="res://scripts/MainMenu.gd" id="1_yqorp"]
 [ext_resource type="AudioStream" uid="uid://cp43igsy71fo4" path="res://Audio/Music/Fingerfist Main01.mp3" id="2_0ykhv"]
+[ext_resource type="Texture2D" uid="uid://c0gs0jepxaao3" path="res://assets/ExterneAssets/Layer_0003_6.png" id="2_mipys"]
+[ext_resource type="Texture2D" uid="uid://bikg5vee43ph" path="res://assets/ExterneAssets/Layer_0002_7.png" id="3_8a8k8"]
+[ext_resource type="Texture2D" uid="uid://b1rwrlwvs6bno" path="res://assets/ExterneAssets/Layer_0004_Lights.png" id="4_7la6k"]
+[ext_resource type="Texture2D" uid="uid://1begy2yhlkem" path="res://assets/ExterneAssets/Layer_0007_Lights.png" id="5_2nypq"]
 
 [node name="MainMenu" type="Node2D"]
+
+[node name="Sprite2D5" type="Sprite2D" parent="."]
+position = Vector2(575, 27)
+scale = Vector2(1.26342, 1.74609)
+texture = ExtResource("1_ucygd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(534, 24)
+scale = Vector2(1.32392, 1.64161)
+texture = ExtResource("2_mipys")
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+position = Vector2(586, 684)
+scale = Vector2(1.27115, 0.615417)
+texture = ExtResource("3_8a8k8")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(704, 66.0001)
+scale = Vector2(0.679355, 0.573761)
+texture = ExtResource("4_7la6k")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(491, 76)
+scale = Vector2(0.679355, 0.573761)
+texture = ExtResource("5_2nypq")
+
+[node name="Sprite2D6" type="Sprite2D" parent="."]
+position = Vector2(357.221, -32.5036)
+scale = Vector2(0.679355, 0.573761)
+texture = ExtResource("4_7la6k")
+
+[node name="Sprite2D7" type="Sprite2D" parent="."]
+position = Vector2(144.221, -22.5038)
+scale = Vector2(0.679355, 0.573761)
+texture = ExtResource("5_2nypq")
+
+[node name="Sprite2D8" type="Sprite2D" parent="."]
+position = Vector2(1035.22, -35.5036)
+scale = Vector2(0.679355, 0.573761)
+texture = ExtResource("4_7la6k")
+
+[node name="Sprite2D9" type="Sprite2D" parent="."]
+position = Vector2(822.221, -25.5038)
+scale = Vector2(0.679355, 0.573761)
+texture = ExtResource("5_2nypq")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 1146.0
