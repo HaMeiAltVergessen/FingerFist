@@ -191,15 +191,16 @@ func _play_sack_destroy_effect() -> void:
 func _apply_progression() -> void:
 	match Global.unlocked_levels:
 		1:
-			$Background/BackgroundSprite.texture = load("res://assets/EigeneAssets/Background01.png")
+			$Background/BackgroundSprite.texture = load("res://assets/ExterneAssets/background4a.png")
 			if box_sack:
 				box_sack.texture = load("res://assets/EigeneAssets/Wall01.png")
 		2:
-			$Background/BackgroundSprite.texture = load("res://assets/EigeneAssets/background03.png")
+			$Background/BackgroundSprite.texture = load("res://assets/ExterneAssets/background4b.png")
 			if box_sack:
 				box_sack.texture = load("res://assets/EigeneAssets/Wand02.png")
 		3:
-			$Background/BackgroundSprite.texture = load("res://assets/EigeneAssets/background05.png")
+			$Background/BackgroundSprite.texture = load("res://assets/ExterneAssets/Layer_0005_5.png")
+			$Background/BackgroundSprite.texture = load("res://assets/ExterneAssets/Layer_0011_0.png")
 			if box_sack:
 				box_sack.texture = load("res://assets/EigeneAssets/Wand03.png")
 
